@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PasteTense — Clipboard History for Mac</title>
+<meta name="description" content="PasteTense is Windows + V for Mac: everything you copy — text, images, and screenshots — one shortcut away. $16.99 one-time purchase by PalamyVerse.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1D2A47;
+    --navy-2: #3A4C75;
+    --blue: #6C82B3;
+    --cream: #F7F3EA;
+    --coral: #FF7A59;
+    --ink: #1D2A47;
+    --muted: #5b6684;
+    --line: #e4ddcd;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.6;
+  }
+  a { color: var(--coral); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  header { padding: 18px 0; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; text-decoration: none; color: var(--ink); }
+  .brand svg { width: 36px; height: 36px; }
+  nav a { color: var(--ink); text-decoration: none; margin-left: 18px; font-size: 15px; }
+  nav a:hover { color: var(--coral); }
+
+  /* Hero */
+  .hero { padding: 48px 0 64px; }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: 48px; align-items: center; }
+  .hero .wrap > * { min-width: 0; }
+  .eyebrow { display: inline-block; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 13px; color: var(--muted); }
+  h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.05; margin: 16px 0; letter-spacing: -0.02em; }
+  h1 span { color: var(--coral); }
+  .lead { font-size: 19px; color: var(--muted); max-width: 520px; }
+  kbd {
+    font-family: inherit; font-weight: 600; font-size: 0.9em;
+    background: #fff; border: 1px solid var(--line); border-bottom-width: 3px;
+    border-radius: 6px; padding: 1px 7px; color: var(--ink);
+  }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 28px; }
+  .btn {
+    display: inline-block; background: var(--coral); color: #fff; font-weight: 600;
+    padding: 14px 26px; border-radius: 12px; text-decoration: none; font-size: 17px;
+  }
+  .btn:hover { filter: brightness(0.95); }
+  .btn.secondary { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+  .small { font-size: 14px; color: var(--muted); }
+
+  /* Mock popup */
+  .mock {
+    background: var(--navy); border-radius: 22px; padding: 18px;
+    box-shadow: 0 30px 60px -20px rgba(29,42,71,.45);
+  }
+  .mock .search {
+    background: var(--navy-2); color: #cfd8ee; border-radius: 10px; padding: 10px 14px; font-size: 14px; margin-bottom: 12px;
+  }
+  .item {
+    background: #fff; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px; font-size: 14px;
+  }
+  .item.active { outline: 3px solid var(--coral); }
+  .item .num { color: var(--muted); font-size: 12px; width: 26px; flex-shrink: 0; }
+  .item .text { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .swatch { width: 18px; height: 18px; border-radius: 5px; background: #FF5733; flex-shrink: 0; }
+  .thumb { width: 40px; height: 28px; border-radius: 5px; background: linear-gradient(135deg, var(--blue), var(--coral)); flex-shrink: 0; }
+  .tag { font-size: 11px; background: var(--cream); border-radius: 6px; padding: 2px 6px; color: var(--muted); flex-shrink: 0; }
+
+  /* Policy strip */
+  .policy-strip { background: var(--navy); color: #fff; padding: 22px 0; }
+  .policy-strip .wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 36px; font-weight: 600; text-align: center; }
+
+  /* Sections */
+  section { padding: 64px 0; }
+  h2 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 8px; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); margin: 0 0 32px; font-size: 18px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+  .icon { font-size: 26px; margin-bottom: 8px; }
+
+  /* Pricing */
+  .price-card {
+    max-width: 520px; margin: 0 auto; background: #fff; border: 2px solid var(--navy);
+    border-radius: 22px; padding: 32px; text-align: center;
+  }
+  .price { font-size: 56px; font-weight: 800; margin: 4px 0; }
+  .price small { font-size: 18px; color: var(--muted); font-weight: 400; }
+  .price-card ul { text-align: left; padding: 0; list-style: none; margin: 20px 0 26px; }
+  .price-card li { padding: 7px 0; border-bottom: 1px solid var(--line); }
+  .price-card li:last-child { border-bottom: none; }
+
+  /* Terms */
+  .terms { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .terms h3 { margin: 22px 0 4px; font-size: 17px; }
+  .terms p { margin: 0; color: var(--muted); font-size: 15px; }
+  .big-rule { color: var(--navy); font-weight: 800; }
+
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; text-align: center; }
+
+  @media (max-width: 820px) {
+    .hero .wrap { grid-template-columns: minmax(0,1fr); }
+    .policy-strip .wrap { flex-direction: column; }
+    .grid { grid-template-columns: 1fr; }
+    .terms-grid { grid-template-columns: 1fr; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#">
+      <svg viewBox="100 100 824 824" aria-hidden="true">
+        <rect x="100" y="100" width="824" height="824" rx="185" fill="#1D2A47"/>
+        <path d="M768.6 296.7 A335 335 0 0 0 221.9 679.5" fill="none" stroke="#FF7A59" stroke-width="44" stroke-linecap="round"/>
+        <polygon points="249.4,727.1 258.4,652.7 180.4,697.7" fill="#FF7A59"/>
+        <rect x="300" y="270" width="330" height="400" rx="40" fill="#3A4C75"/>
+        <rect x="345" y="315" width="330" height="400" rx="40" fill="#6C82B3"/>
+        <rect x="390" y="360" width="330" height="400" rx="40" fill="#F7F3EA"/>
+        <rect x="430" y="410" width="190" height="26" rx="13" fill="#1D2A47"/>
+        <rect x="430" y="462" width="250" height="22" rx="11" fill="#1D2A47" opacity="0.28"/>
+        <rect x="430" y="506" width="210" height="22" rx="11" fill="#1D2A47" opacity="0.28"/>
+        <rect x="430" y="550" width="230" height="22" rx="11" fill="#1D2A47" opacity="0.28"/>
+        <path d="M590 640 L630 700 L670 640" fill="none" stroke="#FF7A59" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      PasteTense
+    </a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#terms">Terms</a>
+      <a href="#privacy">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Clipboard history for Mac · by PalamyVerse</span>
+        <h1>Everything you copy, <span>one shortcut away.</span></h1>
+        <p class="lead">Press <kbd>Left ⌥ Option</kbd> + <kbd>V</kbd> in any app to see everything you've copied — text, images, and screenshots — and click to paste it. Just like Windows + V, now on your Mac.</p>
+        <div class="cta">
+          <!-- BUY LINK: replace href="#pricing" with your Lemon Squeezy checkout link -->
+          <a class="btn" href="#pricing">Buy PasteTense — $16.99</a>
+          <span class="small">One-time purchase · macOS 14+</span>
+        </div>
+      </div>
+
+      <div class="mock" aria-label="Example of the PasteTense popup">
+        <div class="search">🔍 Search your clipboard…</div>
+        <div class="item active"><span class="num">⌘1</span><span class="text">Meeting moved to 3:30 — see you there!</span><span class="tag">📌</span></div>
+        <div class="item"><span class="num">⌘2</span><span class="thumb"></span><span class="text">Screenshot 2026-10-31 at 7.12 PM</span></div>
+        <div class="item"><span class="num">⌘3</span><span class="swatch"></span><span class="text">#FF5733</span><span class="tag">✨ color</span></div>
+        <div class="item"><span class="num">⌘4</span><span class="text">https://example.com/article?utm_source=…</span><span class="tag">✨ link</span></div>
+        <div class="item"><span class="num">⌘5</span><span class="text">45 * 12</span><span class="tag">= 540</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="policy-strip">
+    <div class="wrap">
+      <span>✅ ONE-TIME PURCHASE — NO SUBSCRIPTION</span>
+      <span>❌ NO REFUNDS — ALL SALES FINAL</span>
+      <span>⚠️ UPDATES NOT GUARANTEED</span>
+    </div>
+  </div>
+
+  <section id="features">
+    <div class="wrap">
+      <h2>Paste faster</h2>
+      <p class="sub">Your whole clipboard history, right where you're working.</p>
+      <div class="grid">
+        <div class="card"><div class="icon">🖱️</div><h3>Click to paste</h3><p>Click any item and it pastes right into the app you're using. Or use ⌘1–9.</p></div>
+        <div class="card"><div class="icon">🔍</div><h3>Search &amp; pin</h3><p>Find anything as you type. Pin favorites so they stay at the top.</p></div>
+        <div class="card"><div class="icon">📸</div><h3>Images &amp; screenshots</h3><p>Screenshots and saved images show up instantly.</p></div>
+        <div class="card"><div class="icon">🔢</div><h3>Queue Paste</h3><p>Press ⌘⇧V to paste items one by one, in order — great for forms and spreadsheets.</p></div>
+        <div class="card"><div class="icon">🗑️</div><h3>One-click delete</h3><p>Remove any item instantly, or clear everything except pins.</p></div>
+        <div class="card"><div class="icon">🚀</div><h3>Starts with your Mac</h3><p>Always ready in the menu bar. No Dock icon in your way.</p></div>
+      </div>
+
+      <h2 style="margin-top:64px">Smart tools built in ✨</h2>
+      <p class="sub">Click ✨ on any item.</p>
+      <div class="grid">
+        <div class="card"><div class="icon">🔗</div><h3>Links</h3><p>Open, show a QR code, or Clean URL to remove tracking tags.</p></div>
+        <div class="card"><div class="icon">🔠</div><h3>Change Case</h3><p>Sentence case, Title Case, UPPERCASE, lowercase, Trim &amp; Flatten.</p></div>
+        <div class="card"><div class="icon">🎨</div><h3>Colors</h3><p>Preview hex codes and paste as HEX, RGB, RGBA, HSL, or SwiftUI Color.</p></div>
+        <div class="card"><div class="icon">🧮</div><h3>Calculator</h3><p>Copy 45 * 12 and see = 540. Click to paste the answer.</p></div>
+        <div class="card"><div class="icon">🗺️</div><h3>Maps in 17 languages</h3><p>Open copied addresses in Apple Maps or Google Maps.</p></div>
+        <div class="card"><div class="icon">📦</div><h3>Tracking &amp; JSON</h3><p>Track UPS, USPS, FedEx, DHL packages. Format JSON in one click.</p></div>
+      </div>
+
+      <h2 style="margin-top:64px">Private by design 🔒</h2>
+      <p class="sub">Your clipboard never leaves your Mac.</p>
+      <div class="grid">
+        <div class="card"><div class="icon">🔐</div><h3>Encrypted history</h3><p>Everything is saved encrypted on your Mac. The key stays in your Keychain.</p></div>
+        <div class="card"><div class="icon">🙈</div><h3>Private Mode</h3><p>Pause saving for 15 minutes, 1 hour, or until you resume.</p></div>
+        <div class="card"><div class="icon">🚫</div><h3>Ignore Apps</h3><p>Never save copies from apps you choose, like your bank or password manager.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" style="padding-top:0">
+    <div class="wrap">
+      <div class="price-card">
+        <h2>PasteTense</h2>
+        <div class="price">$16.99 <small>one time</small></div>
+        <ul>
+          <li>✅ <strong>Every feature included</strong> — no tiers, no locked features</li>
+          <li>✅ <strong>No subscription</strong> — pay once, keep it</li>
+          <li>💻 License for <strong>up to 2 of your own Macs</strong></li>
+          <li>🍎 macOS 14 Sonoma or later · Apple silicon &amp; Intel</li>
+          <li>❌ <strong>All sales are final — no refunds</strong></li>
+          <li>⚠️ <strong>Updates are not guaranteed</strong></li>
+        </ul>
+        <!-- BUY LINK: replace href="mailto:..." with your Lemon Squeezy checkout link -->
+        <a class="btn" href="mailto:palamyverse@gmail.com?subject=PasteTense">Buy PasteTense — $16.99</a>
+        <p class="small" style="margin-top:12px">Secure checkout by Lemon Squeezy. You'll get a download link and license key by email.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="terms" class="terms">
+    <div class="wrap terms-grid">
+      <div>
+        <h2>Terms of Sale</h2>
+        <p class="small">Sold by PalamyVerse · Last updated October 31, 2026</p>
+
+        <h3 class="big-rule">1. One-time purchase</h3>
+        <p>PasteTense is a one-time purchase. There is no subscription and no recurring charge.</p>
+        <h3>2. Every feature included</h3>
+        <p>Your purchase includes every feature in the version you buy. There are no paid tiers or locked features.</p>
+        <h3>3. Your license</h3>
+        <p>Your license key is for your personal use on up to 2 of your own Macs. Please don't share, resell, or publish your key. A key that is shared or misused may be turned off.</p>
+        <h3 class="big-rule">4. All sales are final</h3>
+        <p>PasteTense is a digital product, so all sales are final and we do not offer refunds, except where the law requires it. Please review the features before you buy.</p>
+        <h3 class="big-rule">5. Updates</h3>
+        <p>You are buying the current version as it is. We may release updates or fixes, but we don't promise future updates or new features.</p>
+        <h3>6. If we stop selling PasteTense</h3>
+        <p>If PasteTense is no longer sold, everyone who already bought it can keep using the version they have. New purchases will no longer be available.</p>
+        <h3>7. No warranty</h3>
+        <p>PasteTense is provided "as is," without warranties of any kind. To the extent the law allows, PalamyVerse is not liable for any loss or damage from using the app, including lost data.</p>
+        <h3>8. Payments</h3>
+        <p>Payments, taxes, and receipts are handled by Lemon Squeezy, our reseller (merchant of record).</p>
+      </div>
+
+      <div id="privacy">
+        <h2>Privacy Policy</h2>
+        <p class="small">PalamyVerse · Last updated October 31, 2026</p>
+
+        <h3>Your clipboard stays on your Mac</h3>
+        <p>PasteTense never sends what you copy (text, images, or screenshots) anywhere. Your history is saved encrypted on your Mac, and the key that unlocks it stays in your Mac's Keychain.</p>
+        <h3>What leaves your Mac</h3>
+        <p>License check: when you activate, and about once a week after, PasteTense sends your license key and your Mac's name to Lemon Squeezy to confirm your license. Nothing else. Buttons you click — Open (links), Maps, and Track — open your web browser; your browser connects to that website.</p>
+        <h3>What we don't do</h3>
+        <p>No tracking, no analytics, no ads, and we never sell your data.</p>
+        <h3>Your control</h3>
+        <p>Private Mode, Ignore Apps, Clear History, and "Clear History on Quit" are in the app. Deleting your history removes it from your Mac.</p>
+        <h3>Payments</h3>
+        <p>When you buy, Lemon Squeezy (our reseller) collects your name, email, and payment details to process your order. Their privacy policy applies to that information.</p>
+        <h3>Contact</h3>
+        <p>Questions? Email <a href="mailto:palamyverse@gmail.com">palamyverse@gmail.com</a>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 PalamyVerse · PasteTense · <a href="mailto:palamyverse@gmail.com">palamyverse@gmail.com</a><br>
+  Mac and macOS are trademarks of Apple Inc. Windows is a trademark of Microsoft Corporation.
+</footer>
+
+</body>
+</html>
